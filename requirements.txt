@@ -1,4 +1,5 @@
 opencv_python==4.4.0.46
 moviepy==1.0.3
-dlib==19.21.0
+pip install wheel -i https://pypi.tuna.tsinghua.edu.cn/simple
+dlib==19.21.0 (make sure you have installed wheel library before installing dlib)
 PyQt5==5.15.2
