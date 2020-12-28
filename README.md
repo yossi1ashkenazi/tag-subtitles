@@ -2,6 +2,7 @@
 1. Clone this repository to your own machine.
 2. Open cmd or powershell, admin permissions are not necessary.
 3. Run `python main.py`. You may need to install some packages, use `PyPI` tool for that.
+    - You can find needed libraries and their versions in `requirements.txt` file.
 4. When you success to run the application, you have first to choose a video from your machine. Read the next section for more information of the media player.
 5. Record and tag as much words as you want. If you regret and want to delete a record you made, just delete at least one of the relevant row's cell from the table.
 6. Press on the finish button and let the program work.
