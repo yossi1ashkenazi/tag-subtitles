@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QComboBox, QLineEdit, QMessageBox, QTableWidget, QWidget, QPushButton, QHBoxLayout, QVBoxLayout,\
+from PyQt5.QtWidgets import QApplication, QComboBox, QLabel, QLineEdit, QMessageBox, QTableWidget, QWidget, QPushButton, QHBoxLayout, QVBoxLayout,\
     QSlider, QStyle, QFileDialog, QTableWidget,QTableWidgetItem
 import sys, os
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
@@ -70,6 +70,13 @@ class VideoSubtitleWindow(QWidget):
         self.slider.setRange(0,0)
         self.slider.sliderMoved.connect(self.set_position)
 
+        #label to show current time played
+        self.timeLabel = QLabel(self)
+        self.timeLabel.setStyleSheet("QLabel { background-color : black; color : white; }")
+        self.timeLabel.setFixedWidth(50)
+        self.timeLabel.setText('---')
+        self.timeLabel.setAlignment(Qt.AlignCenter)
+
         #create dropbox to select video playing rate
         self.videoRateComboBox = QComboBox(self)
         self.videoRateComboBox.addItems(("1", "0.15", "0.25", "0.5", "0.75", "1.25", "1.5"))
@@ -82,6 +89,7 @@ class VideoSubtitleWindow(QWidget):
         videoControlBar.addWidget(self.openBtn)
         videoControlBar.addWidget(self.playBtn)
         videoControlBar.addWidget(self.slider)
+        videoControlBar.addWidget(self.timeLabel)
         videoControlBar.addWidget(self.videoRateComboBox)
         
         #create textbox for user to describe each word text
@@ -158,6 +166,7 @@ class VideoSubtitleWindow(QWidget):
 
     def position_changed(self, position):
         self.slider.setValue(position)
+        self.timeLabel.setText(str(position) + ' ms')
 
     def duration_changed(self, duration):
         self.slider.setRange(0, duration)
@@ -424,8 +433,17 @@ def isolateLipsFromVideo(srcFilePath, dstFilePath):
                     if y < minY:
                         minY = y
 
-                #extracting region of interest from original frame
+                #extracting region of interest from original frame (lips)
+                #print('ROI Size:')
+                #print('Width: ' + str(frameWidth))
+                #print('Height: ' + str(frameHeight))
                 roiFrame = frame[minY-lipsMargin:minY+frameHeight-lipsMargin, minX-lipsMargin:minX+frameWidth-lipsMargin]
+
+                #resize region of interest from original frame (lips) to fixed size
+                fixedSize = (100, 70) #(width, height)
+                cv2.resize(roiFrame, fixedSize, roiFrame)
+
+                #write roiFrame to videoWrite object
                 outputVideo.write(roiFrame)
         else:
             #Release video input and output files
