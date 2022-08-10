@@ -1,6 +1,6 @@
 # Run Program Instructions:
 ## Using Executable File:
-1. Clone just `build/Tagging Tool` directory from this repository to your own machine.
+1. Clone just `build/Tagging Tool` directory from this repository to your own machine .
 2. Look for `Tagging Tool.exe` file in the cloned folder and run it.
 3. Now, you need to choose a video from your machine. Read the next section for more information of the media player.
 4. Record and tag as much words as you want. If you regret and want to delete a record you made, just delete at least one of the relevant row's cell from the table.
